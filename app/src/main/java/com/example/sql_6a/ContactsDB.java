@@ -18,7 +18,7 @@ public class ContactsDB {
     private final String KEY_NAME = "_name";
     private final String KEY_PHONE = "_phone";
 
-    private final int DATABASE_VERSION = 1;
+    private final int DATABASE_VERSION = 2;
 
     Context context;
 
@@ -53,6 +53,19 @@ public class ContactsDB {
         }
     }
 
+    public void deleteContact(int id)
+    {
+       int rows = sqLiteDatabase.delete(DATABASE_TABLE, KEY_ID+"=?", new String[]{id+""});
+        if(rows > 0)
+        {
+            Toast.makeText(context, "Contact deleted successfully", Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            Toast.makeText(context, "Contact not deleted", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     public ArrayList<Contact> readAllContacts()
     {
        Cursor c =  sqLiteDatabase.rawQuery("SELECT * FROM "+DATABASE_TABLE, null);
@@ -82,7 +95,21 @@ public class ContactsDB {
         helper.close();
     }
 
+    public void updateContact(int id, String newName, String newPhone) {
+        ContentValues cv = new ContentValues();
+        cv.put(KEY_NAME, newName);
+        cv.put(KEY_PHONE, newPhone);
 
+        int rows = sqLiteDatabase.update(DATABASE_TABLE, cv, KEY_ID+"=?", new String[]{id+""});
+        if(rows>0)
+        {
+            Toast.makeText(context, "Contact updated successfully", Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            Toast.makeText(context, "Failed to update contact", Toast.LENGTH_SHORT).show();
+        }
+    }
 
 
     private class MyDatabaseHelper extends SQLiteOpenHelper

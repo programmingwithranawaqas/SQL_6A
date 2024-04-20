@@ -12,11 +12,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ContactAdapter.DeleteContact {
 
     FloatingActionButton fabAdd;
     RecyclerView rvContact;
     ContactAdapter adapter;
+    ArrayList<Contact> contacts;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
         ContactsDB database = new ContactsDB(this);
         database.open();
-        ArrayList<Contact> contacts = database.readAllContacts();
+        contacts = database.readAllContacts();
         database.close();
 
         adapter = new ContactAdapter(this, contacts);
@@ -42,5 +43,19 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    public void onDeleteContact(int index) {
+        contacts.remove(index);
+        adapter.notifyDataSetChanged();
+
+    }
+
+    @Override
+    public void onUpdateContact(int index, String[] values) {
+        contacts.get(index).setName(values[0]);
+        contacts.get(index).setPhone(values[1]);
+        adapter.notifyDataSetChanged();
     }
 }
