@@ -28,12 +28,9 @@ public class MainActivity extends AppCompatActivity implements ContactAdapter.De
         rvContact.setHasFixedSize(true);
         rvContact.setLayoutManager(new LinearLayoutManager(this));
 
-        ContactsDB database = new ContactsDB(this);
-        database.open();
-        contacts = database.readAllContacts();
-        database.close();
 
-        adapter = new ContactAdapter(this, contacts);
+
+        adapter = new ContactAdapter(this, MyApplication.contacts);
 
         rvContact.setAdapter(adapter);
 

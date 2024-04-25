@@ -19,10 +19,8 @@ public class FilteredContacts extends AppCompatActivity {
         setContentView(R.layout.activity_filtered_contacts);
         svContact = findViewById(R.id.svContact);
         lvContact = findViewById(R.id.lvContacts);
-        ContactsDB database = new ContactsDB(this);
-        database.open();
-        ArrayList<Contact> contacts = database.readAllContacts();
-        database.close();
+
+        ArrayList<Contact> contacts = MyApplication.contacts;
 
 
         svContact.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
