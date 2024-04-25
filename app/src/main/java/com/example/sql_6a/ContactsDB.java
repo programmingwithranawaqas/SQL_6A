@@ -125,7 +125,7 @@ public class ContactsDB {
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-            db.execSQL("DROP TABLE "+DATABASE_TABLE+" IF EXISTS");
+            db.execSQL("DROP TABLE IF EXISTS "+DATABASE_TABLE);
             onCreate(db);
         }
     }

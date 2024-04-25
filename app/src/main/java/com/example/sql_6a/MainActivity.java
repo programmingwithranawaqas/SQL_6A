@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements ContactAdapter.DeleteContact {
 
-    FloatingActionButton fabAdd;
+    FloatingActionButton fabAdd, fabFilter;
     RecyclerView rvContact;
     ContactAdapter adapter;
     ArrayList<Contact> contacts;
@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements ContactAdapter.De
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         fabAdd = findViewById(R.id.fabAdd);
+        fabFilter = findViewById(R.id.fabFilter);
         rvContact = findViewById(R.id.rvContacts);
         rvContact.setHasFixedSize(true);
         rvContact.setLayoutManager(new LinearLayoutManager(this));
@@ -40,6 +41,14 @@ public class MainActivity extends AppCompatActivity implements ContactAdapter.De
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, AddContact.class));
+                finish();
+            }
+        });
+
+        fabFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, FilteredContacts.class));
                 finish();
             }
         });
